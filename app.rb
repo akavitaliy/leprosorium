@@ -10,12 +10,16 @@ def init_db
 	@db.results_as_hash = true
 end
 
+#определяется во всех запросах
 before do
+	#инициализация БД
 	init_db
 end
 
+#вызывается каждый раз при инициализации приложения/перезапуска приложения
 configure do	
 	init_db
+	#создаёт таблицу если таблица не существует
 	@db.execute 'create table if not exists "Posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text);'
 end
 
@@ -29,6 +33,11 @@ end
 
 post '/new' do	
 	content = params[:content]
+
+	if content.length <= 0
+		@error = 'Type post text'
+		return erb :new
+	end
 
 	erb "You type #{content}"
 end
