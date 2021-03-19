@@ -14,7 +14,9 @@ get '/new' do
 	erb :new
 end
 
-post '/' do	
+post '/new' do	
+	content = params[:content]
 
+	erb "You type #{content}"
 end
 

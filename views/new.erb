@@ -1,10 +1,10 @@
 <h2>Add New Post</h2>
 
 
-<form>
+<form action="/new" method="POST">
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Your post</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+        <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
