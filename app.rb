@@ -33,6 +33,16 @@ get '/new' do
 	erb :new
 end
 
+get '/details/:id' do	
+	post_id = params[:id]
+
+	results = @db.execute 'select * from Posts where id = ?', [post_id]
+	@row = results[0]
+
+	erb :details
+end
+
+
 post '/new' do	
 	content = params[:content]
 
