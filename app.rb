@@ -34,8 +34,9 @@ get '/new' do
 end
 
 get '/details/:id' do	
+	# получаем переменную из url
 	post_id = params[:id]
-
+	#получаем один пост из списка постов
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	@row = results[0]
 
@@ -56,5 +57,15 @@ post '/new' do
 	#перенаправляет на главную стр.
 	redirect to '/'
 	#erb "You type #{content}"
+end
+
+post '/details/:id' do
+	# получаем переменную из url
+	post_id = params[:id]
+	#получаем переменную из post запроса
+	content = params[:content]
+
+	erb "You type: #{content} id = #{post_id}"
+
 end
 
