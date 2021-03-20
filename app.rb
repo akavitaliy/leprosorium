@@ -21,6 +21,8 @@ configure do
 	init_db
 	#создаёт таблицу если таблица не существует
 	@db.execute 'create table if not exists "Posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text);'
+
+	@db.execute 'create table if not exists "Comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_id" integer);'
 end
 
 get '/' do
@@ -64,6 +66,9 @@ post '/details/:id' do
 	post_id = params[:id]
 	#получаем переменную из post запроса
 	content = params[:content]
+
+	@db.execute 'insert into Comments (content, created_date) values (?,datetime())', [content]
+
 
 	erb "You type: #{content} id = #{post_id}"
 
