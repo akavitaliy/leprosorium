@@ -22,7 +22,7 @@ configure do
 	#создаёт таблицу если таблица не существует
 	@db.execute 'create table if not exists "Posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_name");'
 
-	@db.execute 'create table if not exists "Comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_id" integer);'
+	@db.execute 'create table if not exists "Comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_id" integer, "comment_name" text);'
 end
 
 get '/' do
@@ -84,9 +84,10 @@ post '/details/:id' do
 	# получаем переменную из url
 	post_id = params[:id]
 	#получаем переменную из post запроса
+	comment_name = params[:comment_name]
 	content = params[:content]
 
-	@db.execute 'insert into Comments (content, created_date, post_id) values (?,datetime(),?)', [content, post_id]
+	@db.execute 'insert into Comments (comment_name, content, created_date, post_id) values (?,?,datetime(),?)', [comment_name, content, post_id]
 
 
 	redirect to ('/details/' + post_id)

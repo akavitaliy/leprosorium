@@ -1,6 +1,9 @@
 <h4>Post details:</h4>
 <br>
 <p>
+    <strong><em><%=@row['post_name']%></em></strong>
+    <br>
+    <br>
     <%= @row['content'] %> 
     <br>
     <br>
@@ -11,6 +14,9 @@
 <br>
 
 <%@comments.each do |comment|%>
+    <em><%=comment['comment_name']%></em>
+    <br>
+    <br>
     <p>
         <%=comment['content']%>
     </p>  
@@ -22,6 +28,10 @@
     <br>
 <%end%>
 <form action="/details/<%=@row['id']%>" method="POST">
+    <div class="form-group">
+    <label for="exampleInputEmail1">Enter your name</label>
+    <input name="comment_name" type="text" class="form-control" id="exampleInputEmail1">
+    </div>
     <div class="form-group">        
         <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
