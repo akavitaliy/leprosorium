@@ -20,7 +20,7 @@ end
 configure do	
 	init_db
 	#создаёт таблицу если таблица не существует
-	@db.execute 'create table if not exists "Posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text);'
+	@db.execute 'create table if not exists "Posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_name");'
 
 	@db.execute 'create table if not exists "Comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "created_date" date, "content" text, "post_id" integer);'
 end
@@ -42,7 +42,7 @@ get '/details/:post_id' do
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
 	
 	@row = results[0]
-	#получаем коментарии из таблицы Comments
+	#получаем коментарии из таблицы Comments для поста
 	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
 
 	erb :details
@@ -51,14 +51,29 @@ end
 
 
 post '/new' do	
-	content = params[:content]
+	@content = params[:content]
+	@post_name = params[:post_name]
 
-	if content.length <= 0
-		@error = 'Type post text'
-		return erb :new
+	hh ={:post_name => 'Type your name', :content => 'Type post text'}
+
+	hh.each do |key, value|
+		if params[key] == ''
+			@error = hh[key]
+			return erb :new
+		end
 	end
+
+	# if post_name.length <= 0
+	# 	@error = 'Type your name'
+	# 	return erb :new
+	# end
+	
+	# if content.length <= 0
+	# 	@error = 'Type post text'
+	# 	return erb :new
+	# end
 	#сохранение данных в БД
-	@db.execute 'insert into Posts (content, created_date) values (?,datetime())', [content]
+	@db.execute 'insert into Posts (post_name, content, created_date) values (?,?,datetime())', [@post_name, @content]
 
 	#перенаправляет на главную стр.
 	redirect to '/'

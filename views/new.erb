@@ -3,8 +3,12 @@
 
 <form action="/new" method="POST">
     <div class="form-group">
+    <label for="exampleInputEmail1">Enter your name</label>
+    <input value="<%=@post_name%>" name="post_name" type="text" class="form-control" id="exampleInputEmail1">
+    </div>
+    <div class="form-group">
         <label for="exampleFormControlTextarea1">Your post</label>
-        <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+        <textarea value="<%=@content%>" name="content" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

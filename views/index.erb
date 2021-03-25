@@ -4,10 +4,13 @@
 <br>
 <%@results.each do |post|%>
     <p>
+       <em><%=post['post_name']%></em>
+       <br>
+       <br>
        <%=post['content']%> 
        <br>
        <br>
-       Added at: <%=post['created_date']%>
+       <span style="font-size: 75; color: #999">Added at: <%=post['created_date']%></span>
        <br>
        <br>
        <a href="/details/<%=post['id']%>">comments</a>
