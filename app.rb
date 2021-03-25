@@ -35,14 +35,18 @@ get '/new' do
 	erb :new
 end
 
-get '/details/:id' do	
+get '/details/:post_id' do	
 	# получаем переменную из url
-	post_id = params[:id]
+	post_id = params[:post_id]
 	#получаем один пост из списка постов
 	results = @db.execute 'select * from Posts where id = ?', [post_id]
+	
 	@row = results[0]
+	#получаем коментарии из таблицы Comments
+	@comments = @db.execute 'select * from Comments where post_id = ? order by id', [post_id]
 
 	erb :details
+	
 end
 
 
@@ -70,7 +74,7 @@ post '/details/:id' do
 	@db.execute 'insert into Comments (content, created_date, post_id) values (?,datetime(),?)', [content, post_id]
 
 
-	erb "You type: #{content} id = #{post_id}"
+	redirect to ('/details/' + post_id)
 
 end
 

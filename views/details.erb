@@ -1,14 +1,26 @@
 <h4>Post details:</h4>
 <br>
 <p>
-    <%=@row['content']%> 
+    <%= @row['content'] %> 
     <br>
     <br>
-    Added at: <%=@row['created_date']%>
+    Added at: <%= @row['created_date'] %>
 </p>
 <br>
 <h4>Comments: </h4>
+<br>
 
+<%@comments.each do |comment|%>
+    <p>
+        <%=comment['content']%>
+    </p>  
+    <br>   
+    <p>
+    <span style="font-size: 75; color: #999">Added at: <%=comment['created_date']%></span>
+    </p>
+    <hr> 
+    <br>
+<%end%>
 <form action="/details/<%=@row['id']%>" method="POST">
     <div class="form-group">        
         <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
