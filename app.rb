@@ -87,6 +87,15 @@ post '/details/:id' do
 	comment_name = params[:comment_name]
 	content = params[:content]
 
+	hh ={:comment_name => 'Type your name', :content => 'Type post text'}
+
+	hh.each do |key, value|
+		if params[key] == ''
+			@error = hh[key]
+			redirect to ('/details/' + post_id)
+		end
+	end
+
 	@db.execute 'insert into Comments (comment_name, content, created_date, post_id) values (?,?,datetime(),?)', [comment_name, content, post_id]
 
 
